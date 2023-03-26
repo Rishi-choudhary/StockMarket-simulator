@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Quote
+{% endblock %}
+
+{% block main %}
+<div class="trade rounded  p-3 border mr-3 mt-5">
+
+    <h1 class="text-center font-weight-bold my-3">Quote Symbol</h1>
+    <form action="/quote" autocomplete="off" class="mt-5 register m-auto" method="post">
+       <div class="form-group">
+           <input type="text" class="form-control pt-3 p-4" id="input" name="symbol" placeholder="Symbol" />
+           <ul class="list"></ul>
+           <div class="btn-grp">
+           <button class="btn btn-warning details px-5 py-3" value="details" type="submit" name="details">Details</button>
+           </div>
+        </div>
+    
+       
+           
+      </form>
+</div>
+<script src="../static/script.js"></script>
+{% endblock %}

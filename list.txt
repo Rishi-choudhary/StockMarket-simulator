@@ -1,0 +1,9 @@
+# userTable
+
+(CREATE TABLE user (
+...     ID INT PRIMARY KEY   NOT NULL,
+...     username text,
+...     hash text,
+...     cash real
+... )""")
+

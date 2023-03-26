@@ -1,0 +1,21 @@
+{% extends "layout.html" %} {% block title %} wallet {% endblock %}
+
+{% block main %}
+    <div class="main">
+<div class="row">
+    <div class="col-5 p-3 text-left">
+        <div class="heroText"> <h1 class="lh-base">Start investing and Trade a wide range of stocks.</h1></div>
+
+        <button onclick="location.href = '/login';" class="btn herobutton border-dark mb-auto px-5 py-3 f-1 rounder-pill border border-2">
+            Start <span class="material-symbols-outlined">
+                arrow_forward
+                </span>
+            </button>
+    </div>
+       
+    <div class="col-5">
+      <img src="../static/9319770_4136942.jpg" alt="" class="heroimg">
+    </div>
+  </div>
+</div>
+    {% endblock %}

@@ -1,0 +1,25 @@
+{% extends "layout.html" %} {% block title %} wallet {% endblock %}
+
+{% block main %}
+
+<main class="container registerPage border border-5 mt-5 rounded  p-5">
+    <h1 class="text-center font-weight-bold">Login</h1>
+
+                <form action="/login" class="mt-5 register m-auto" method="post">
+                    <div class="form-group">
+                        <input autocomplete="off" autofocus class="form-control p-4" name="username" placeholder="Username" type="text">
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control pt-3 p-4" name="password" placeholder="Password" type="password">
+                    </div>
+                   <div class="btn-grp">
+                    <button  class="btn herobutton border-dark px-5" type="submit">Login</button>
+                    <a href="/register" class="mx-5 link">create account</a>
+                   </div>
+                </form>
+            </div>
+       
+    <!-- </div> -->
+    </main>
+
+{% endblock %}
