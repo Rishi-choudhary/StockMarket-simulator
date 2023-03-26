@@ -42,12 +42,14 @@
           <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
             <a class="dropdown-item" href="/logout">Log out</a>
             <a class="dropdown-item" href="/password">Change Password</a>
+            <button class="dropdown-item" onclick="reset()">Reset</a>
           </div>
         </div></ul>
         {% else %}
             <ul class="navbar-nav ml-auto  mt-2 ">
                 <li class="nav-item px-3 mx-2"><button type="button" class="btn px-4"><a class="nav-link text-white" href="/register">Register</a></button></li>
                 <li class="nav-item px-3 mx-2"><button type="button" class="btn px-4"><a class="nav-link text-white" href="/login">Log In</a></button></li>
+                
             </ul>
         {% endif %}
     </div>
@@ -63,6 +65,16 @@
         </div>
   {% endif %}
   {% block main %}{% endblock %}
+      <script>
 
+        function reset() {
+          if (confirm("Do You want to Reset your Funds?")) {
+              window.location.pathname = '/reset'
+          } else {
+              return 
+          }
+        }
+
+      </script>
   </body>
 </html>

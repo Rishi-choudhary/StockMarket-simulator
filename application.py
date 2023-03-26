@@ -58,6 +58,7 @@ def quote():
         try:
         # lookup ticker symbol from quote.html form
             symbol = lookup(request.form.get("symbol"))
+            print(symbol)
             return render_template("quoted.html", symbol=symbol,username=username[0][0])
             
 
@@ -114,47 +115,21 @@ def home():
                                
         return render_template("home.html",username=username[0][0])
 
-@app.route("/wallet")
-@login_required
-def wallet():
-    id = session['user_id']
-    username = db.execute("SELECT username FROM user WHERE id= ?",(id,)).fetchall()
-    """Show portfolio of stocks"""
-    id=session["user_id"]
-    # select user's stock portfolio and cash total
-    rows = db.execute("SELECT * FROM portfolio WHERE userid = ?", (id,)).fetchall()
-    cash = db.execute("SELECT cash FROM user WHERE id = ?", (id,)).fetchall()
-    # get cash value float
-    cash = cash[0][0]
-    # this will be total value of all stock holdings and cash
-    sum = cash
 
-    data = list()
-    
-    for row in rows:
-        look = lookup(row[1])
-        tempdict = dict()
-        tempdict['name'] = look["name"]
-        tempdict['shares'] = row[2]
-        tempdict['price'] = look['price']
-        tempdict["total"] = tempdict['price'] * tempdict['shares'] 
-        tempdict['symbol'] = look['symbol']
-        
-        sum += tempdict['total'] 
-        
-        tempdict['price'] = inr(tempdict['price'])
-        tempdict['total'] = inr(tempdict['total'])
-        data.append(tempdict)
-        
-    
-    return render_template("wallet.html", rows=data, cash=inr(cash), sum=inr(sum),username=username[0][0])
 
 def buy(symbol,shares):
-    quote = lookup(symbol)
+    
+    
+    
+    try:
+        # lookup ticker symbol from quote.html form
+        quote = lookup(symbol)
+        # if lookup() returns None, it's not a valid stock symbol
+    except(IndexError):         
+            # Return template with stock quote, passing in symbol dict
+        return apology("Must be a valid Symbol")
 
-    # return apology if symbol not provided or invalid
-    if quote == None:
-        return apology("must provide valid stock symbol", 403)
+
 
     # return apology if shares not provided. buy form only accepts positive integers
     if not shares:
@@ -210,10 +185,19 @@ def buy(symbol,shares):
 
 def sell(symbol,shares):
 
-        
     id=session["user_id"]
+        
 
-    quote = lookup(symbol)
+    try:
+        # lookup ticker symbol from quote.html form
+        quote = lookup(symbol)
+        # if lookup() returns None, it's not a valid stock symbol
+    except(IndexError):         
+            # Return template with stock quote, passing in symbol dict
+        return apology("Must be a valid Symbol")
+    
+    
+    
     rows = db.execute("SELECT * FROM portfolio WHERE userid = ? AND symbol = ?",(id,symbol,)).fetchall()
 
     # return apology if symbol invalid/ not owned
@@ -225,7 +209,7 @@ def sell(symbol,shares):
         return apology("must provide number of shares", 403)
 
      # current shares of this stock
-    oldshares = rows[0][0]
+    oldshares = rows[0][2]
 
     # cast shares from form to int
     shares = int(shares)
@@ -247,6 +231,7 @@ def sell(symbol,shares):
 
     # subtract sold shares from previous shares
     newshares = oldshares - shares
+    print(newshares)
 
     # if shares remain, update portfolio table with new shares
     if shares > 0:
@@ -256,10 +241,7 @@ def sell(symbol,shares):
     else:
         db.execute("DELETE FROM portfolio WHERE symbol = ?AND userid = ?",(symbol,id,))
 
-    # price = 0
-    # # update history table
-    # db.execute("INSERT INTO history (userid, symbol, shares, method, price) VALUES (:userid, :symbol, :shares, 'Sell', :price)",(id,symbol,share,))
-
+   
     database.commit()
     # redirect to index page
     return redirect("/wallet")
@@ -274,7 +256,6 @@ def trade():
         username = db.execute("SELECT username FROM user WHERE id= ?",(id,)).fetchall()
         return render_template("trade.html",username=username[0][0])
     else:
-        
         symbol = request.form.get("symbol")
         share = request.form.get("shares")
         
@@ -286,6 +267,53 @@ def trade():
             return redirect("/quote")
 
 
+
+@app.route("/wallet")
+@login_required
+def wallet():
+    id = session['user_id']
+    username = db.execute("SELECT username FROM user WHERE id= ?",(id,)).fetchall()
+    """Show portfolio of stocks"""
+    id=session["user_id"]
+    # select user's stock portfolio and cash total
+    rows = db.execute("SELECT * FROM portfolio WHERE userid = ?", (id,)).fetchall()
+    cash = db.execute("SELECT cash FROM user WHERE id = ?", (id,)).fetchall()
+    # get cash value float
+    cash = cash[0][0]
+    # this will be total value of all stock holdings and cash
+    sum = cash
+
+    data = list()
+    
+    for row in rows:
+        if row[2] != 0:
+            look = lookup(row[1])
+            tempdict = dict()
+            tempdict['name'] = look["name"]
+            tempdict['shares'] = row[2]
+            tempdict['price'] = look['price']
+            tempdict["total"] = tempdict['price'] * row[2]
+            tempdict['symbol'] = look['symbol']
+            
+            sum += tempdict['total'] 
+            
+            tempdict['price'] = inr(tempdict['price'])
+            tempdict['total'] = inr(tempdict['total'])
+            data.append(tempdict)
+        
+    
+    return render_template("wallet.html", rows=data, cash=inr(cash), sum=inr(sum),username=username[0][0])
+
+
+
+@app.route("/reset")
+def reset():
+    if request.method == "GET":
+        id = session['user_id']
+        db.execute("DELETE FROM portfolio WHERE userid = ?",(id,))
+        db.execute("UPDATE user SET cash = ? WHERE id = ?",(10000,id,))
+        database.commit()
+        return redirect("/wallet")
 
 
 @app.route("/logout")
