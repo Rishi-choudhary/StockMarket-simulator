@@ -1,4 +1,4 @@
-from flask import Flask, flash, jsonify, redirect, render_template, request, session
+from flask import Flask, flash, jsonify, redirect, render_template, request, session ,url_for
 from flask_session import Session
 from helpers import apology, login_required , lookup ,inr
 import json
@@ -36,11 +36,7 @@ def index():
     if request.method == "GET":
         session.clear()
         return render_template("index.html")
-    
-    
-    
-    
-    
+
     
 @app.route("/quote", methods=["GET", "POST"])
 @login_required
@@ -48,32 +44,35 @@ def quote():
     """Get stock quote."""
     id = session['user_id']
     username = db.execute("SELECT username FROM user WHERE id= ?",(id,)).fetchall()
+    symbol = request.form.get("symbol")
 
     # if GET method, return quote.html form
-    if request.method == "GET":
-        return render_template("quote.html",username=username[0][0])
+    if request.method == "POST":
+        return redirect(url_for('quote_details', sym=symbol))
 
     # if POST method, get info from form, make sure it's a valid stock
     else:
-        try:
-        # lookup ticker symbol from quote.html form
-            symbol = lookup(request.form.get("symbol"))
-            print(symbol)
-            return render_template("quoted.html", symbol=symbol,username=username[0][0])
-            
-
-        # if lookup() returns None, it's not a valid stock symbol
-        except(IndexError):         
-            # Return template with stock quote, passing in symbol dict
-            return apology("Must be a valid Symbol")
+        return render_template("quote.html",username=username[0][0])
+        
+@app.route("/quote/<sym>")
+@login_required
+def quote_details(sym):
+    id = session['user_id']
+    username = db.execute("SELECT username FROM user WHERE id= ?",(id,)).fetchall()
+    try:
+    # lookup ticker symbol from quote.html form
+        symbol = lookup(sym)
+        return render_template("quoted.html", symbol=symbol,username=username[0][0])
+        
+    # if lookup() returns None, it's not a valid stock symbol
+    except(IndexError):         
+        # Return template with stock quote, passing in symbol dict
+        return apology("Must be a valid Symbol")
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
     
-
     session.clear()
-        
-    
   # if form is submited
       # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
@@ -109,7 +108,6 @@ def home():
     if request.method == "GET":
         
         id = session['user_id']
-        print(id)
 
         username = db.execute("SELECT username FROM user WHERE id= ?",(id,)).fetchall()
                                
@@ -117,9 +115,7 @@ def home():
 
 
 
-def buy(symbol,shares):
-    
-    
+def buy(symbol,shares):    
     
     try:
         # lookup ticker symbol from quote.html form
@@ -186,8 +182,7 @@ def buy(symbol,shares):
 def sell(symbol,shares):
 
     id=session["user_id"]
-        
-
+    
     try:
         # lookup ticker symbol from quote.html form
         quote = lookup(symbol)
@@ -226,12 +221,15 @@ def sell(symbol,shares):
     cash = cash[0][0]
     cash = cash + sold
 
+
+
     # update cash balance in user table
     db.execute("UPDATE user SET cash = ? WHERE id = ?",(cash,id,))
 
     # subtract sold shares from previous shares
     newshares = oldshares - shares
-    print(newshares)
+
+
 
     # if shares remain, update portfolio table with new shares
     if shares > 0:
@@ -264,7 +262,7 @@ def trade():
         elif request.form.get("sell") == "sell":
             return sell(symbol,share)
         elif request.form.get("details") == "details":
-            return redirect("/quote")
+            return redirect(url_for("quote_details",sym=symbol))
 
 
 
