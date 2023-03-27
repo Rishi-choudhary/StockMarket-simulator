@@ -30,7 +30,6 @@ db = database.cursor()
 
 
 @app.route("/")
-@login_required
 def index():
     
     if request.method == "GET":
