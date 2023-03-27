@@ -38,19 +38,15 @@
                     <td>{{row['symbol']}}</td>
                     <td>{{row['name']}}</td>
                     <td>{{row['shares']}}</td>
-                    <td>{{row['price']}}</td>
+                    {% if row['profit']%}
+                    <td>{{row['price']}} <span class="badge" style="color:rgb(90 228 168); font-size:1.3rem;">+{{ row['profit_amount'] }}</span></td>
+                    {% else %}
+                    <td>{{row['price']}} <span class="badge" style="color:rgb(247, 82, 95); font-size:1.3rem">-{{ row['loss_amount'] }}</span></td>
+                    {% endif %}
                     <td>{{row['total']}}</td>
                 </tr>
             {% endfor %}
-                <!-- <tr>
-                    <td style="font-weight: bold;">REMAINING CASH</td>
-                    <td></td><td></td><td></td>
-                    <td>{{cash}}</td>
-                </tr>
-                <tr>
-                    <td style="font-weight: bold;">TOTAL CASH</td><td></td><td></td><td></td>
-                    <td><b>{{sum}}</b></td>
-                </tr> -->
+         
         </tbody>
     </table>
     </main>

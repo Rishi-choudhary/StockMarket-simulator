@@ -151,7 +151,7 @@ def buy(symbol,shares):
 
     # if row doesn't exist yet, create it but don't update shares
     if len(row) != 1:
-        db.execute("INSERT INTO portfolio (userid, symbol,share) VALUES (?, ?,?)",(id,symbol,0))
+        db.execute("INSERT INTO portfolio (userid, symbol,share,original_price) VALUES (?, ?,?,?)",(id,symbol,0,quote['price'],))
         
     oldshares = 0
     oldsharedata =  db.execute("SELECT share FROM portfolio WHERE userid = ? AND symbol = ?",(id,symbol,)).fetchall()
@@ -291,6 +291,13 @@ def wallet():
             tempdict['price'] = look['price']
             tempdict["total"] = tempdict['price'] * row[2]
             tempdict['symbol'] = look['symbol']
+            if look['price'] >= row[3]:
+                tempdict['profit'] = True
+                tempdict['profit_amount'] = (tempdict['price'] - row[3])
+            else:
+                tempdict['profit'] = False
+                tempdict['loss_amount'] = (row[3] - tempdict['price'])
+            
             
             sum += tempdict['total'] 
             
