@@ -1,0 +1,104 @@
+{
+    "data" : [
+        {"code": 532921, "company": "ADANIPORTS"
+        },
+        {"code": 500820, "company": "ASIANPAINT"
+        },
+        {"code": 532215, "company": "AXISBANK"
+        },
+        {"code": 532977, "company": "BAJAJ-AUTO"
+        },
+        {"code": 500034, "company": "BAJFINANCE"
+        },
+        {"code": 532978, "company": "BAJAJFINSV"
+        },
+        {"code": 500547, "company": "BPCL"
+        },
+        {"code": 532545, "company": "BHARTIARTL"
+        },
+        {"code":534816 , "company": "INFRATEL"
+        },
+        {"code": 500087, "company": "CIPLA"
+        },
+        {"code": 533278, "company": "COALINDIA"
+        },
+        {"code": 500124, "company": "DRREDDY"
+        },
+        {"code": 505200, "company": "EICHERMOT"
+        },
+        {"code": 532155, "company": "GAIL"
+        },
+        {"code": 500300, "company": "GRASIM"
+        },
+        {"code": 532281, "company": "HCLTECH"
+        },
+        {"code": 500180, "company": "HDFCBANK"
+        },
+        {"code": 500182, "company": "HEROMOTOCO"
+        },
+        {"code": 500440, "company": "HINDALCO"
+        },
+        {"code": 500104, "company": "HINDPETRO"
+        },
+        {"code": 500696, "company": "HINDUNILVR"
+        },
+        {"code": 500010, "company": "HDFC"
+        },
+        {"code": 500875, "company": "ITC"
+        },
+        {"code": 532174, "company": "ICICIBANK"
+        },
+        {"code": 535789, "company": "IBULHSGFIN"
+        },
+        {"code": 530965, "company": "IOC"
+        },
+        {"code": 532187, "company": "INDUSINDBK"
+        },
+        {"code": 500209, "company": "INFY"
+        },
+        {"code": 500228, "company": "JSWSTEEL"
+        },
+        {"code": 500247, "company": "KOTAKBANK"
+        },
+        {"code": 500510, "company": "LT"
+        },
+        {"code": 500520, "company": "M&M"
+        },
+        {"code": 532500, "company": "MARUTI"
+        },
+        {"code": 532555, "company": "NTPC"
+        },
+        {"code": 500312, "company": "ONGC"
+        },
+        {"code": 532898, "company": "POWERGRID"
+        },
+        {"code": 500325, "company": "RELIANCE"
+        },
+        {"code": 500112, "company": "SBIN"
+        },
+        {"code": 524715, "company": "SUNPHARMA"
+        },
+        {"code": 532540, "company": "TCS"
+        },
+        {"code": 500570, "company": "TATAMOTORS"
+        },
+        {"code": 500470, "company": "TATASTEEL"
+        },
+        {"code": 532755, "company": "TECHM"
+        },
+        {"code": 500114, "company": "TITAN"
+        },
+        {"code": 512070, "company": "UPL"
+        },
+        {"code": 532538, "company": "ULTRACEMCO"
+        },
+        {"code": 500295, "company": "VEDL"
+        },
+        {"code": 507685, "company": "WIPRO"
+        },
+        {"code": 532648, "company": "YESBANK"
+        },
+        {"code": 505537, "company": "ZEEL"
+        }
+    ]
+}

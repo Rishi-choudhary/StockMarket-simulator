@@ -291,7 +291,7 @@ def wallet():
             tempdict['price'] = look['price']
             tempdict["total"] = tempdict['price'] * row[2]
             tempdict['symbol'] = look['symbol']
-            if look['price'] >= row[3]:
+            if look['price'] > row[3]:
                 tempdict['profit'] = True
                 tempdict['profit_amount'] = round((tempdict['price'] - row[3]),3)
             else:

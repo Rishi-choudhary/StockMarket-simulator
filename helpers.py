@@ -1,7 +1,8 @@
 from flask import redirect, render_template, session
 from functools import wraps
-import nsepy as nse
-
+from bsedata.bse import BSE
+bsedata = BSE()
+import json
 
 
 def apology(message, code=400):
@@ -24,21 +25,42 @@ def login_required(f):
     return decorated_function
 
 
+
+
+
     
 def lookup(sym):    
+    
+    f = open('fasf.json')
+    data = json.load(f)
+    code = 0
+    for i in data['data']:
+        if sym == i["company"]:
+            code = i['code']
+    
     try:
-        data = nse.live.get_quote(symbol=sym)['data'][0]
+        q = bsedata.getQuote(str(code))
+        
+        return {
+            "name":q['companyName'],
+            "symbol":q['securityID'],
+            "price":float(q['currentValue'])
+        }    
+    except  (KeyError, TypeError, ValueError):
+        return None 
+    # try:
+    #     data = nse.live.get_quote(symbol=sym)['data'][0]
       
     
-        return {
-            "name":data['companyName'],
-            "symbol":data["symbol"],
-            "price": float(data["lastPrice"]) 
+    #     return {
+    #         "name":data['companyName'],
+    #         "symbol":data["symbol"],
+    #         "price": float(data["lastPrice"]) 
             
-        }
+    #     }
 
-    except  (KeyError, TypeError, ValueError):
-        return None  
+    # except  (KeyError, TypeError, ValueError):
+    #     return None  
     
 
 def inr(value):
