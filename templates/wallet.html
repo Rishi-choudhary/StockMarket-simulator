@@ -14,8 +14,42 @@
 
         </div>
         <div class="remaining-cash text-left registerPage border rounded mx-3 p-5" >
-            <p>REMAINING CASH</p>
-            <h1>{{cash}}</h1>
+            <div>
+                <p>REMAINING CASH</p>
+                <h1>{{cash}}</h1>
+            </div>
+           
+            <button type="button" class="btn btn-secondary border rounded "><span class="material-symbols-outlined" data-toggle="modal" data-target="#exampleModal">
+                add
+                </span></button>
+
+
+                <!-- Button trigger modal -->
+
+  
+  <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h1 class="modal-title" id="exampleModalLabel">Add Funds</h1>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                <form action="/wallet"  method="post" class="form-group">
+                    <input type="number"  value="0" min="0" max="50000" class="form-control pt-3 p-4" id="funds" name="funds" placeholder="0.00" />
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn px-5 py-2 btn-secondary" data-dismiss="modal"><h3>Close</h3></button>
+                <button type="submit" class="btn px-5 py-2 btn-primary"><h3>Add</h3></button>
+            </form>
+
+                </div>
+            </div>
+            </div>
+        </div>
 
         </div>
     </div>
@@ -29,6 +63,8 @@
                 <th scope="col">Name</th>
                 <th scope="col">Shares</th>
                 <th scope="col">Price</th>
+                <th scope="col">P / L</th>
+
                 <th scope="col">Total</th>
             </tr>
         </thead>
@@ -38,11 +74,14 @@
                     <td><a href="/quote/{{row['symbol']}}">{{row['symbol']}}</a></td>
                     <td>{{row['name']}}</td>
                     <td>{{row['shares']}}</td>
+                    <td>{{row['price']}} </td>
                     {% if row['profit']%}
-                    <td>{{row['price']}} <span class="badge" style="color:rgb(90 228 168); font-size:1.3rem;">+{{ row['profit_amount'] }}</span></td>
+
+                    <td><span class="badge" style="color:rgb(90 228 168); font-size:1.3rem;">+{{ row['profit_amount'] }}</span></td>
                     {% else %}
-                    <td>{{row['price']}} <span class="badge" style="color:rgb(247, 82, 95); font-size:1.3rem">-{{ row['loss_amount'] }}</span></td>
+                    <td> <span class="badge" style="color:rgb(247, 82, 95); font-size:1.3rem">-{{ row['loss_amount'] }}</span></td>
                     {% endif %}
+
                     <td>{{row['total']}}</td>
                 </tr>
             {% endfor %}

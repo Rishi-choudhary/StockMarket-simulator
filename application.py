@@ -265,13 +265,23 @@ def trade():
 
 
 
-@app.route("/wallet")
+@app.route("/wallet",methods=["GET","POST"])
 @login_required
 def wallet():
     id = session['user_id']
+    if request.method == "POST":
+        funds = request.form.get("funds")
+        if funds != '':
+            funds = float(funds)
+        else:
+            return redirect("/wallet")
+            
+        actualFunds = float(db.execute("SELECT cash FROM user WHERE id = ?", (id,)).fetchall()[0][0])
+        db.execute("UPDATE user SET cash = ? WHERE id = ?",((actualFunds+funds),id,))
+        database.commit()
+        return redirect("/wallet")
     username = db.execute("SELECT username FROM user WHERE id= ?",(id,)).fetchall()
     """Show portfolio of stocks"""
-    id=session["user_id"]
     # select user's stock portfolio and cash total
     rows = db.execute("SELECT * FROM portfolio WHERE userid = ?", (id,)).fetchall()
     cash = db.execute("SELECT cash FROM user WHERE id = ?", (id,)).fetchall()
@@ -291,7 +301,8 @@ def wallet():
             tempdict['price'] = look['price']
             tempdict["total"] = tempdict['price'] * row[2]
             tempdict['symbol'] = look['symbol']
-            if look['price'] > row[3]:
+            if look['price'] >= row[3]:
+                
                 tempdict['profit'] = True
                 tempdict['profit_amount'] = round((tempdict['price'] - row[3]),3)
             else:

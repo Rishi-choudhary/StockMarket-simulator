@@ -192,7 +192,7 @@ nav .btn{
     margin-bottom: 5rem;/* justify-content: space-around; */
 }
 .wallet-info div{
-    width: 50%;
+    width: 100%;
 }
 
 .total-cash{
@@ -201,8 +201,26 @@ nav .btn{
     
 }
 .remaining-cash{
-    background-color: rgb(140, 137, 137);
+    background-color: #8c8989;
     color: white;
+    display: flex;
+    width: 100%;    
+    justify-content: space-around;
+    align-items: center; 
+}
+.modal{
+    color: black;
+    width: 100%;
+}
+.modal h3{
+    margin-bottom: 0;
+}
+
+.modal input{
+    font-size: 2rem;
+}
+.remaining-cash button span{
+    font-size: 2.5rem;
 }
 
 .table{
