@@ -1,6 +1,6 @@
 # StockMarket-simulator
 
-# some iamges of my project
+# some images of my project
 
 ![Screenshot_20230220_190804](https://github.com/Rishi-choudhary/StockMarket-simulator/assets/77925291/1b29f4be-2568-4131-b74c-8437ff4f212c)![Screenshot_20230220_190905](https://github.com/Rishi-choudhary/StockMarket-simulator/assets/77925291/87c377f9-6e88-4e1d-a6b7-01d1db9a0205)
 
