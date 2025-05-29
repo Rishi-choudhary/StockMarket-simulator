@@ -10,5 +10,5 @@
 
 ![Screenshot 2023-03-28 101419](https://github.com/Rishi-choudhary/StockMarket-simulator/assets/77925291/470acef6-5831-4502-a2ee-f3d02b86b52c)
 ![Screenshot 2023-06-02 155014](https://github.com/Rishi-choudhary/StockMarket-simulator/assets/77925291/5123efbb-fcff-4287-aaf2-c84cdba8ac74)
-![Screenshot 2023-06-03 092504](https://github.com/Rishi-choudhary/StockMarket-simulator/assets/77925291/a7cdd968-62fd-48cc-9cca-102c6731e017)
+
 ![Screenshot_20230128_151737](https://github.com/Rishi-choudhary/StockMarket-simulator/assets/77925291/9343c17b-4655-4228-bd65-d33baa1a21ce)
